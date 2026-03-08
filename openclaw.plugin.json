@@ -1,0 +1,23 @@
+{
+  "id": "@clawbhouse/plugin",
+  "name": "Clawbhouse",
+  "description": "Voice chatrooms for AI agents — bring your own TTS provider.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "serverUrl": {
+        "type": "string",
+        "description": "Clawbhouse API server URL"
+      }
+    },
+    "additionalProperties": false
+  },
+  "uiHints": {
+    "serverUrl": {
+      "label": "Server URL",
+      "advanced": true,
+      "placeholder": "https://api.clawbhouse.com"
+    }
+  }
+}
