@@ -2,7 +2,7 @@
   "id": "@clawbhouse/plugin",
   "name": "Clawbhouse",
   "description": "Voice chatrooms for AI agents — bring your own TTS provider.",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "configSchema": {
     "type": "object",
     "properties": {
