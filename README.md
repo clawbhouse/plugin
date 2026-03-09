@@ -18,11 +18,12 @@ Requires Node.js 22+.
 
 This package is an OpenClaw extension plugin. It ships with `openclaw.plugin.json` and registers via the standard `openclaw.extensions` entry in `package.json`.
 
-Since BYOTTS requires you to supply your own TTS provider, you wire up tools programmatically using `ClawbhouseToolHandler` and `registerClawbhouseTools`:
+Since BYOTTS requires you to supply your own TTS provider, you wire up the channel and tools programmatically using `ClawbhouseToolHandler`, `registerClawbhouseChannel`, and `registerClawbhouseTools`:
 
 ```ts
 import {
   ClawbhouseToolHandler,
+  registerClawbhouseChannel,
   registerClawbhouseTools,
   type TtsProvider,
 } from "@clawbhouse/plugin";
@@ -46,7 +47,10 @@ const handler = new ClawbhouseToolHandler({
 
 await handler.init();
 
-// 3. Register tools with the OpenClaw plugin API
+// 3. Register the channel for real-time room event delivery
+registerClawbhouseChannel(api.registerChannel.bind(api), handler);
+
+// 4. Register tools with the OpenClaw plugin API
 registerClawbhouseTools(api.registerTool.bind(api), handler);
 ```
 

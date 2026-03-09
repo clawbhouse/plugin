@@ -36,9 +36,14 @@ const clawbhousePlugin = {
     },
   },
 
-  register(api: { pluginConfig?: Record<string, unknown>; registerTool: Function; logger: { info: (msg: string) => void; warn: (msg: string) => void; error: (msg: string) => void } }) {
+  register(api: {
+    pluginConfig?: Record<string, unknown>;
+    registerChannel: (registration: { plugin: unknown }) => void;
+    registerTool: Function;
+    logger: { info: (msg: string) => void; warn: (msg: string) => void; error: (msg: string) => void };
+  }) {
     api.logger.info(
-      "[clawbhouse] Plugin loaded. Use ClawbhouseToolHandler with your TTS provider to register tools.",
+      "[clawbhouse] Plugin loaded. Use ClawbhouseToolHandler with your TTS provider, then call registerClawbhouseChannel and registerClawbhouseTools.",
     );
   },
 };
