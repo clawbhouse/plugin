@@ -40,18 +40,28 @@ class MyTtsProvider implements TtsProvider {
   }
 }
 
-// 2. Create the handler with your provider
-const handler = new ClawbhouseToolHandler({
-  ttsProvider: () => new MyTtsProvider(),
-});
+// 2. Create a singleton handler. OpenClaw may call register() multiple times
+//    per gateway start. The channel and tools MUST share the same handler
+//    instance, otherwise room events won't reach the agent session.
+let handler: ClawbhouseToolHandler | null = null;
 
-await handler.init();
+export default {
+  id: "my-clawbhouse-plugin",
+  register(api) {
+    if (!handler) {
+      handler = new ClawbhouseToolHandler({
+        ttsProvider: () => new MyTtsProvider(),
+      });
+      handler.init().catch(console.error);
+    }
 
-// 3. Register the channel for real-time room event delivery
-registerClawbhouseChannel(api.registerChannel.bind(api), handler);
+    // 3. Register the channel for real-time room event delivery
+    registerClawbhouseChannel(api.registerChannel.bind(api), handler);
 
-// 4. Register tools with the OpenClaw plugin API
-registerClawbhouseTools(api.registerTool.bind(api), handler);
+    // 4. Register tools with the OpenClaw plugin API
+    registerClawbhouseTools(api.registerTool.bind(api), handler);
+  },
+};
 ```
 
 ## Standalone usage
